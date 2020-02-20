@@ -37,10 +37,10 @@
 
     <section>
       Hello world!
-      <div class="content-1 bluedivs">
-        <div>&lt;div&gt;</div>
-        <div>&lt;div&gt;</div>
-        <div>&lt;div&gt;</div>
+      <div class="content-1 showdivs">
+        <div>div</div>
+        <div>div</div>
+        <div>div</div>
       </div>
 
       <pre><code>.content {
@@ -59,11 +59,11 @@
     <section>
       It can work kinda like flex...
       <div class="content">
-        <div>&lt;div&gt;</div>
-        <div>&lt;div&gt;</div>
-        <div>&lt;div&gt;</div>
-        <div class="long">&lt;div class="long"&gt;</div>
-        <div>&lt;div&gt;</div>
+        <div>div</div>
+        <div>div</div>
+        <div>div</div>
+        <div class="long"><span class="class">.long</span></div>
+        <div>div</div>
       </div>
 
       <pre><code>.content {
@@ -79,11 +79,11 @@
     <section>
       But we can go vertical as well!
       <div class="content">
-        <div>&lt;div&gt;</div>
-        <div class="tall">&lt;div class="tall"&gt;</div>
-        <div>&lt;div&gt;</div>
-        <div>&lt;div&gt;</div>
-        <div>&lt;div&gt;</div>
+        <div>div</div>
+        <div class="tall"><span class="class">.tall</span></div>
+        <div>div</div>
+        <div>div</div>
+        <div>div</div>
       </div>
 
       <pre><code>.content {
@@ -103,13 +103,14 @@
     </section>
 
     <section>
-      Grid lines
-      <div class="content-2 bluedivs">
-        <div class="wide">&lt;div class="wide"&gt;</div>
-        <div class="not-as-wide">&lt;div class="not-as-wide"&gt;</div>
-      </div>
+      <section>
+        Grid lines
+        <div class="content-2 showdivs">
+          <div class="wide"><span class="class">.wide</span></div>
+          <div class="not-as-wide"><span class="class">.not-as-wide</span></div>
+        </div>
 
-      <pre><code>.content {
+        <pre><code>.content {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
 }
@@ -122,40 +123,41 @@
 .not-as-wide {
   grid-column: 1 / 4;
 }
-</code></pre>
+        </code></pre>
 
-      <aside class="notes">
-        <ul>
-          <li>grid lines are edges, not the body</li>
-          <li>also introduced the repeat func</li>
-          <li>grid line index starts at 1</li>
-        </ul>
-      </aside>
-    </section>
+        <aside class="notes">
+          <ul>
+            <li>grid lines are edges, not the body</li>
+            <li>also introduced the repeat func</li>
+            <li>grid line index starts at 1</li>
+          </ul>
+        </aside>
+      </section>
 
-    <section>
-      Firefox grid inspector
+      <section>
+        Firefox grid inspector
 
-      <img src="imgs/show-grid-lines.png"/>
+        <img src="imgs/show-grid-lines.png"/>
 
-      <aside class="notes">
-        <ul>
-          <li></li>
-        </ul>
-      </aside>
+        <aside class="notes">
+          <ul>
+            <li></li>
+          </ul>
+        </aside>
+      </section>
     </section>
 
     <section>
       Named lines
-      <div class="content-3 bluedivs">
+      <div class="content-3 showdivs">
         <div></div>
-        <div class="use-name">&lt;div class="use-name"&gt;</div>
+        <div class="use-name"><span class="class">.use-name</span></div>
         <div></div>
       </div>
 
       <pre><code>.content {
   display: grid;
-  grid-template-columns: 20px [st] 1fr 1fr [en] 20px;
+  grid-template-columns: 80px [st] 1fr 1fr [en] 80px;
 }
 
 .use-name {
@@ -170,29 +172,30 @@
     </section>
 
     <section>
-      Use it with flexbox for best effect
-      <div class="content-4">
-        <div class="both">
-          <img src="http://placehold.it/30"/>
-          <small>Here is some text lined up</small>
+      <section>
+        Use it with flexbox for best effect
+        <div class="content-4">
+          <div class="both">
+            <img src="http://placehold.it/30"/>
+            <small>Here is some text lined up</small>
+          </div>
+
+          <div class="both">
+            <img src="http://placehold.it/30"/>
+            <small>Here is some text lined up</small>
+          </div>
+
+          <div class="content-4-text">
+            <small>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.  Phasellus
+              ullamcorper nunc vel libero consequat, eget porta dolor porta. Sed
+              convallis metus eu tellus elementum vestibulum.  Phasellus finibus
+              mollis nibh, eget iaculis nulla laoreet id. Nulla vitae nibh arcu.
+            </small>
+          </div>
         </div>
 
-        <div class="both">
-          <img src="http://placehold.it/30"/>
-          <small>Here is some text lined up</small>
-        </div>
-
-        <div class="content-4-text">
-          <small>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.  Phasellus
-            ullamcorper nunc vel libero consequat, eget porta dolor porta. Sed
-            convallis metus eu tellus elementum vestibulum.  Phasellus finibus
-            mollis nibh, eget iaculis nulla laoreet id. Nulla vitae nibh arcu.
-          </small>
-        </div>
-      </div>
-
-      <pre><code>.content {
+        <pre><code>.content {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 30px;
@@ -205,61 +208,56 @@
   justify-content: left;
 }</code></pre>
 
-      <aside class="notes">
-        <ul>
-          <li>use grid to position on the screen</li>
-          <li>use flexbox to position releative to each other</li>
-          <li>do use margin only for things in flexbox</li>
-        </ul>
-      </aside>
-    </section>
+        <aside class="notes">
+          <ul>
+            <li>use grid to position on the screen</li>
+            <li>use flexbox to position releative to each other</li>
+            <li>do use margin only for things in flexbox</li>
+          </ul>
+        </aside>
+      </section>
 
-    <section>
-      <img src="imgs/with-flexbox.png"/>
+      <section>
+        <img src="imgs/with-flexbox.png"/>
 
-      <aside class="notes">
-        <ul>
-          <li>don't need margin or padding</li>
-          <li>just use grid-gap</li>
-          <li>there's nothing in the bottom left</li>
-        </ul>
-      </aside>
+        <aside class="notes">
+          <ul>
+            <li>don't need margin or padding</li>
+            <li>just use grid-gap</li>
+            <li>there's nothing in the bottom left</li>
+          </ul>
+        </aside>
+      </section>
     </section>
 
     <section>
       Auto layout
-      <div class="content-5 bluedivs">
-        <div class="header">
-          <small>
-            &lt;div class="header"&gt;
-          </small>
-        </div>
-        <div> &lt;div&gt; </div>
-        <div> &lt;div&gt; </div>
-        <div> &lt;div&gt; </div>
-        <div> &lt;div&gt; </div>
-        <div> &lt;div&gt; </div>
-        <div> &lt;div&gt; </div>
+      <div class="content-5 showdivs">
+        <div><small> div </small></div>
+        <div><small> div </small></div>
+        <div><small> div </small></div>
+        <div><small> div </small></div>
+        <div><small> div </small></div>
+        <div><small> div </small></div>
       </div>
 
+      <aside class="notes">
+        <ul>
+          <li>only one row is specified</li>
+          <li>auto created rows use 1fr</li>
+        </ul>
+      </aside>
+
       <pre><code>.content {
-  display: grid;
   grid-template-rows: 30px;
-  grid-auto-rows: 1fr;
-
-  grid-template-columns: repeat(3, 1fr);
-}
-
-.header {
-  grid-column: 1 / -1;
-  grid-row: 1;
+  grid-auto-rows: 60px;
 }</code></pre>
 
 <style>
 .content-5 {
   display: grid;
   grid-template-rows: 30px;
-  grid-auto-rows: 1fr;
+  grid-auto-rows: 80px;
 
   grid-template-columns: repeat(3, 1fr);
 }
@@ -271,6 +269,72 @@
 </style>
     </section>
 
+    <section>
+      <section>
+
+        Named grid areas
+        <div class="content-6 showdivs">
+          <div class="header"><small> <span class="class">.header</span> </small></div>
+          <div class="nav"><small> <span class="class">.nav</span> </small></div>
+          <div class="body"><small> <span class="class">.body</span> </small></div>
+          <div class="footer"><small> <span class="class">.footer</span> </small></div>
+        </div>
+
+        <aside class="notes">
+          <ul>
+            <li>notice 1fr vs 4fr</li>
+            <li>auto uses remaining space, stretching if needed</li>
+          </ul>
+        </aside>
+
+        <pre><code>.content {
+  grid-template-rows: 30px auto 30px;
+  grid-template-columns: 1fr 4fr;
+
+  grid-template-areas:
+    "header header"
+    "nav    body"
+    "footer footer";
+}
+
+.header {
+  grid-area: header;
+}</code></pre>
+
+        <style>
+.content-6 {
+  display: grid;
+  grid-template-rows: 30px auto 30px;
+  grid-template-columns: 1fr 4fr;
+
+  grid-template-areas:
+    "header header"
+    "nav    body"
+    "footer footer";
+}
+
+.content-6 .footer {
+  grid-area: footer;
+}
+
+.content-6 .header {
+  grid-area: header;
+}
+
+.content-6 .body {
+  grid-area: body;
+}
+
+.content-6 .nav {
+  grid-area: nav;
+}
+        </style>
+
+      </section>
+      <section>
+        <img src="imgs/named-areas.png"/>
+      </section>
+    </section>
 
     <section>
       <p><a href="https://github.com/ehrenmurdick/css-grid-slides">github.com/ehrenmurdick/css-grid-slides</a></p>
@@ -282,6 +346,10 @@
 </div>
 
 <style type="text/css">
+.class {
+  color: #e3ceab;
+}
+
 .content-4 {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -321,7 +389,7 @@
 
 .content-3 {
   display: grid;
-  grid-template-columns: 20px [st] 1fr 1fr [en] 20px;
+  grid-template-columns: 80px [st] 1fr 1fr [en] 80px;
 }
 
 .use-name {
@@ -355,7 +423,7 @@
   grid-row: span 2;
 }
 
-.bluedivs div,
+.showdivs div,
 .content div {
   border: 1px solid #abc;
 }
