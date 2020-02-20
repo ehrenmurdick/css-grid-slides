@@ -4,9 +4,9 @@
 <head>
 <meta charset="utf-8">
 
-<title>Embedding elm components</title>
+<title>CSS Grid</title>
 
-<meta name="description" content="Embedding elm components">
+<meta name="description" content="CSS Grid">
 <meta name="author" content="Ehren Murdick">
 
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -32,183 +32,249 @@
     </section>
 
     <section>
-      <h1>Embedding Elm</h1>
+      <h1>CSS Grid</h1>
     </section>
 
+    <section>
+      Hello world!
+      <div class="content-1 bluedivs">
+        <div>&lt;div&gt;</div>
+        <div>&lt;div&gt;</div>
+        <div>&lt;div&gt;</div>
+      </div>
+
+      <pre><code>.content {
+  display: grid;
+  grid-template-columns: 120px auto 120px;
+}</code></pre>
+
+      <aside class="notes">
+        <ul>
+          <li>very little code to make this work</li>
+          <li>the divs are laid out automatically</li>
+        </ul>
+      </aside>
+    </section>
 
     <section>
-      <h3>our parent app</h3>
-      <section>
-        <pre><code class="hljs elm">type alias Model =
-    { greeting : String }
+      It can work kinda like flex...
+      <div class="content">
+        <div>&lt;div&gt;</div>
+        <div>&lt;div&gt;</div>
+        <div>&lt;div&gt;</div>
+        <div class="long">&lt;div class="long"&gt;</div>
+        <div>&lt;div&gt;</div>
+      </div>
 
-init : Model
-init =
-    { greeting = "" }
+      <pre><code>.content {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
 
-type Msg
-    = Greet String
+.long {
+  grid-column: span 2;
+}</code></pre>
+    </section>
 
-update : Msg -&gt; Model -&gt; Model
-update msg model =
-    case msg of
-        Greet s -&gt;
-            { model | greeting = s }
-        </code></pre>
-      </section>
+    <section>
+      But we can go vertical as well!
+      <div class="content">
+        <div>&lt;div&gt;</div>
+        <div class="tall">&lt;div class="tall"&gt;</div>
+        <div>&lt;div&gt;</div>
+        <div>&lt;div&gt;</div>
+        <div>&lt;div&gt;</div>
+      </div>
 
-      <section>
-        <pre><code class="hljs elm">view : Model -&gt; Html Msg
-view model =
-    div []
-        [ button [ onClick (Greet "hi") ] [ text "hi" ]
-        , button [ onClick (Greet "hello") ] [ text "hello" ]
-        , text model.greeting
-        ]
+      <pre><code>.content {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.tall {
+  grid-row: span 2;
+}</code></pre>
+
+      <aside class="notes">
+        <ul>
+          <li>in flex this requires nesting</li>
+        </ul>
+      </aside>
+    </section>
+
+    <section>
+      Grid lines
+      <div class="content-2 bluedivs">
+        <div class="wide">&lt;div class="wide"&gt;</div>
+        <div class="not-as-wide">&lt;div class="not-as-wide"&gt;</div>
+      </div>
+
+      <pre><code>.content {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.wide {
+  grid-column-start: 1;
+  grid-column-end: -1;
+}
+
+.not-as-wide {
+  grid-column: 1 / 4;
+}
 </code></pre>
-      </section>
 
-
+      <aside class="notes">
+        <ul>
+          <li>grid lines are edges, not the body</li>
+          <li>also introduced the repeat func</li>
+          <li>grid line index starts at 1</li>
+        </ul>
+      </aside>
     </section>
 
     <section>
-      <h3>embedding...</h3>
-      <section>
-        <h4>the model</h4>
-        <pre><code class="hljs elm">type alias Model =
-    { greeting : String, inc: Inc.Model }
+      Firefox grid inspector
 
--- in module Increment
-type alias Model =
-    { num : Int }
-        </code></pre>
-      </section>
+      <img src="imgs/show-grid-lines.png"/>
 
-      <section>
-        <h4>init</h4>
-        <pre><code class="hljs elm">init : Model
-init =
-    { greeting = "", inc = Inc.init }
-
--- in module Inc
-init : Model
-init =
-    { num = 0 }
-
--- equivalent to
-init = { greeting = "", inc = { num = 0 } }
-        </code></pre>
-      </section>
-
-      <section>
-        <h4>view</h4>
-        <pre><code class="hljs elm">
--- Parent
-view : Model -&gt; Html Msg
-view model =
-    div []
-        [ button [ onClick (Greet "hi") ] [ text "hi" ] ]
-
--- Increment
-view : Model -&gt; Html Msg
-view model =
-    div []
-        [ button [ onClick Decrement ] [ text "-" ] ]
-        </code></pre>
-      </section>
-
-      <section>
-        <h4>view cont.</h4>
-        <pre><code class="hljs elm">
--- Parent
-view : Main.Model -&gt; Html Main.Msg
-
--- Increment
-view : Increment.Model -&gt; Html Increment.Msg
-        </code></pre>
-        type mismatch!
-      </section>
-
-      <section>
-        <h4>view cont.</h4>
-        <small>convert</small>
-        <pre><code class="hljs elm">Html Increment.Msg
--- to
-Html Main.Msg</code></pre>
-        <small class="fragment">what about</small>
-        <pre class="fragment"><code class="hljs elm">Array Int
--- to
-Array String</code></pre>
-      </section>
-
-      <section>
-        <h4>view cont.</h4>
-        <small>just use map!</small>
-        <pre><code class="hljs elm">f = String.fromInt : Int -&gt; String
-is = [1, 2, 3, 4] : Array Int
-os = Array.map f is
-os = ["1", "2", "3", "4"] : Array String</code></pre>
-      </section>
-
-      <section>
-        <h4>view cont.</h4>
-        <small>need an f</small>
-        <pre><code class="hljs elm">f : Increment.Msg -&gt; Main.Msg</code></pre>
-        <pre class="fragment"><code class="hljs elm">type Msg
-    = Greet String
-    | IncMsg Inc.Msg</code></pre>
-        <pre class="fragment"><code class="hljs elm">IncMsg : Inc.Msg -&gt; Main.Msg</code></pre>
-      </section>
-
-      <section>
-        <h4>view</h4>
-        <pre><code class="hljs elm">view model =
-    div []
-        [ button [ onClick (Greet "hi") ] [ text "hi" ]
-        , button [ onClick (Greet "hello") ] [ text "hello" ]
-        , text model.greeting
-        , Html.map IncMsg (Inc.view model.inc)
-        ]</code></pre>
-      </section>
-
-      <section>
-        <h4>update</h4>
-        <pre><code class="hljs elm">update : Msg -&gt; Model -&gt; Model
-update msg model =
-    case msg of
-        Greet s -&gt;
-            { model | greeting = s }
-        IncMsg m -&gt;
-            { model | inc = Inc.update m model.inc }</code></pre>
-      </section>
-
-      <section>
-        <h4>update cont.</h4>
-        <pre><code class="hljs elm">-- in Increment
-update : Msg -&gt; Model -&gt; Model
-update msg model =
-    case msg of
-        Increment -&gt;
-            { model | num = model.num + 1 }
-        Decrement -&gt;
-            { model | num = model.num - 1 }</code></pre>
-      </section>
-    </section>
-
-
-
-    <section>
-      <h4>one final thought</h4>
-      <small>you can embed multiple copies</small>
-      <pre><code class="hljs elm">type alias Model =
-    { greeting : String
-    , incleft : Increment.Model
-    , incright : Increment.Model
-    }</code></pre>
+      <aside class="notes">
+        <ul>
+          <li></li>
+        </ul>
+      </aside>
     </section>
 
     <section>
-      <p><a href="https://github.com/ehrenmurdick/elm-embed-slides">github.com/ehrenmurdick/elm-embed-slides</a></p>
+      Named lines
+      <div class="content-3 bluedivs">
+        <div></div>
+        <div class="use-name">&lt;div class="use-name"&gt;</div>
+        <div></div>
+      </div>
+
+      <pre><code>.content {
+  display: grid;
+  grid-template-columns: 20px [st] 1fr 1fr [en] 20px;
+}
+
+.use-name {
+  grid-column: st / en;
+}</code></pre>
+
+      <aside class="notes">
+        <ul>
+          <li>st is short for content-start</li>
+        </ul>
+      </aside>
+    </section>
+
+    <section>
+      Use it with flexbox for best effect
+      <div class="content-4">
+        <div class="both">
+          <img src="http://placehold.it/30"/>
+          <small>Here is some text lined up</small>
+        </div>
+
+        <div class="both">
+          <img src="http://placehold.it/30"/>
+          <small>Here is some text lined up</small>
+        </div>
+
+        <div class="content-4-text">
+          <small>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit.  Phasellus
+            ullamcorper nunc vel libero consequat, eget porta dolor porta. Sed
+            convallis metus eu tellus elementum vestibulum.  Phasellus finibus
+            mollis nibh, eget iaculis nulla laoreet id. Nulla vitae nibh arcu.
+          </small>
+        </div>
+      </div>
+
+      <pre><code>.content {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 30px;
+}
+
+.both {
+  grid-column: span 2;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+}</code></pre>
+
+      <aside class="notes">
+        <ul>
+          <li>use grid to position on the screen</li>
+          <li>use flexbox to position releative to each other</li>
+          <li>do use margin only for things in flexbox</li>
+        </ul>
+      </aside>
+    </section>
+
+    <section>
+      <img src="imgs/with-flexbox.png"/>
+
+      <aside class="notes">
+        <ul>
+          <li>don't need margin or padding</li>
+          <li>just use grid-gap</li>
+          <li>there's nothing in the bottom left</li>
+        </ul>
+      </aside>
+    </section>
+
+    <section>
+      Auto layout
+      <div class="content-5 bluedivs">
+        <div class="header">
+          <small>
+            &lt;div class="header"&gt;
+          </small>
+        </div>
+        <div> &lt;div&gt; </div>
+        <div> &lt;div&gt; </div>
+        <div> &lt;div&gt; </div>
+        <div> &lt;div&gt; </div>
+        <div> &lt;div&gt; </div>
+        <div> &lt;div&gt; </div>
+      </div>
+
+      <pre><code>.content {
+  display: grid;
+  grid-template-rows: 30px;
+  grid-auto-rows: 1fr;
+
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.header {
+  grid-column: 1 / -1;
+  grid-row: 1;
+}</code></pre>
+
+<style>
+.content-5 {
+  display: grid;
+  grid-template-rows: 30px;
+  grid-auto-rows: 1fr;
+
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.content-5 .header {
+  grid-column: 1 / -1;
+  grid-row: 1;
+}
+</style>
+    </section>
+
+
+    <section>
+      <p><a href="https://github.com/ehrenmurdick/css-grid-slides">github.com/ehrenmurdick/css-grid-slides</a></p>
+      <p><a href="http://ehren.io/css-grid-slides">ehren.io/css-grid-slides</a></p>
     </section>
 
 
@@ -216,6 +282,84 @@ update msg model =
 </div>
 
 <style type="text/css">
+.content-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 30px;
+}
+
+.content-4 img {
+  margin: 2px !important;
+  margin-left: 0 !important;
+}
+
+.content-4-text {
+  display: flex;
+  justify-content: left;
+  grid-column: 3 / span 2;
+}
+
+.content-4-text small {
+  text-align: left;
+}
+
+.both {
+  grid-column: span 2;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+}
+
+.both small {
+  margin-left: 10px;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.content-3 {
+  display: grid;
+  grid-template-columns: 20px [st] 1fr 1fr [en] 20px;
+}
+
+.use-name {
+  grid-column: st / en;
+}
+
+.content-2 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.wide {
+  grid-column-start: 1;
+  grid-column-end: -1;
+}
+
+.not-as-wide {
+  grid-column: 1 / 4;
+}
+
+.content-1 {
+  display: grid;
+  grid-template-columns: 120px auto 120px;
+}
+
+.long {
+  grid-column: span 2;
+}
+
+.tall {
+  grid-row: span 2;
+}
+
+.bluedivs div,
+.content div {
+  border: 1px solid #abc;
+}
+
 code {
   font-family: monospace;
   font-variant-ligatures: none !important;
